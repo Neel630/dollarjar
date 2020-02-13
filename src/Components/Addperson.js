@@ -9,9 +9,8 @@ const Addperson = (props) => {
             <p>{props.name}</p>
 
             <p>value:{props.value}</p>
-            <input></input>
-            <button >Add</button>
-            <button>Sub</button>
+            <button onClick={props.addHandler}>Add</button>
+            <button onClick={props.subHandler}>Sub</button>
         </div>
     );
     
