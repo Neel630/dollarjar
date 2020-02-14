@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Components/Person'
 
-class App extends Component {
+class App extends React.Component {
  
   render() {
 
+    console.log(this.props);
   return (
-    
+    <div>
+    <p>Hey {this.props.location.username}</p>
     <Person />
+    </div>
 
   );
   }

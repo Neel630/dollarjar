@@ -5,18 +5,18 @@ class Person extends Component {
 
     state =({
         newperson:"",
-        count:3,
+        count:0,
         person:[
-            {
-                username:"Sandeep",
-                value:30,
-                id:1
-            },
-            {
-                username:"Meet",
-                value:20,
-                id:2
-            }
+            // {
+            //     username:"Sandeep",
+            //     value:30,
+            //     id:1
+            // },
+            // {
+            //     username:"Meet",
+            //     value:20,
+            //     id:2
+            // }
         ],
         penalty:10,
         total:0
@@ -29,6 +29,10 @@ class Person extends Component {
         }
         )
 
+    }
+
+    componentDidMount=()=>{
+        this.total();
     }
 
       addpersonHandler = () => {
@@ -55,17 +59,6 @@ class Person extends Component {
 
         }
 
-    total = () => {
-        let temp = 0;
-        this.state.person.forEach(element => {
-            temp= temp+element.value;
-        });
-        console.log(temp);
-        
-        this.setState({
-            total:temp,
-        })
-    }
 
     addMoneyHandler = (event, id) =>{
         var index=0;
@@ -80,11 +73,12 @@ class Person extends Component {
         
         const person = [...this.state.person]
         person[index] = personTemp;
-
+        
         this.setState({
             person
         })
-        console.log("total"+this.state.total);
+        
+        this.total();
     }
 
     subMoneyHandler = (event, id) =>{
@@ -103,15 +97,33 @@ class Person extends Component {
         this.setState({
             person
         })
-        console.log("total"+this.state.total);
+        this.total();
+
+    }
+
+    total =()=>{
+    let temp = 0;
+        let tempPerson = [...this.state.person]
+        tempPerson.forEach(element => {
+            temp= temp+element.value;
+        });
+        console.log(temp+" total");
+        
+        this.setState({
+            total:temp,
+        })
+
+        console.log("total "+this.state.total );
     }
 
     render(){
+
+
     return (
     <div>
         <input type="text" onChange={event => this.changeHandler(event)}></input>
         <button onClick={this.addpersonHandler}>Add a Person</button>
-        <p>Total : {this.total}</p>
+        <p>Total : {this.state.total}</p>
         <p>Penalty : {this.state.penalty}</p>
         <input type="number" onChange={this.changePenaltyHandler}></input>
         {
