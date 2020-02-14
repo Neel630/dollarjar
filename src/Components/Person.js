@@ -31,9 +31,6 @@ class Person extends Component {
 
     }
 
-    componentDidMount=()=>{
-        this.total();
-    }
 
       addpersonHandler = () => {
         console.log(this.state.person);
@@ -48,7 +45,6 @@ class Person extends Component {
             count:idval
         });
 
-        console.log(this.state.count);
       }
 
       changeHandler = (event) =>{
@@ -109,25 +105,25 @@ class Person extends Component {
 
     }
 
-    total =()=>{
-    let temp = 0;
-        // let tempPerson = [...this.state.person]
-        // tempPerson.forEach(element => {
-        //     temp= temp+element.value;
-        // });
-        // console.log(temp+" temp");
+    // total =()=>{
+    // let temp = 0;
+    //     // let tempPerson = [...this.state.person]
+    //     // tempPerson.forEach(element => {
+    //     //     temp= temp+element.value;
+    //     // });
+    //     // console.log(temp+" temp");
         
-        for(var i=0;i<this.state.person.length;i++){
-            temp=temp+this.state.person[i].value;
-        }
-        console.log(temp+" temp");
+    //     for(var i=0;i<this.state.person.length;i++){
+    //         temp=temp+this.state.person[i].value;
+    //     }
+    //     console.log(temp+" temp");
         
-        this.setState({
-            total:temp,
-        })
+    //     this.setState({
+    //         total:temp,
+    //     })
 
-        console.log("total "+this.state.total );
-    }
+    //     console.log("total "+this.state.total );
+    // }
 
     render(){
 
