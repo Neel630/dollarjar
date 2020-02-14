@@ -74,11 +74,13 @@ class Person extends Component {
         const person = [...this.state.person]
         person[index] = personTemp;
         
+        let temptotal = this.state.total;
+        temptotal = temptotal + this.state.penalty;
+
         this.setState({
-            person
+            person:person,
+            total:temptotal
         })
-        
-        this.total();
     }
 
     subMoneyHandler = (event, id) =>{
@@ -89,25 +91,36 @@ class Person extends Component {
             break;
             }
         }
+
         const personTemp = {...this.state.person[index]};
         personTemp.value = personTemp.value - this.state.penalty;
         const person = [...this.state.person]
         person[index] = personTemp;
 
+        let temptotal = this.state.total;
+        temptotal = temptotal - this.state.penalty;
+
         this.setState({
-            person
+            person:person,
+            total:temptotal
         })
-        this.total();
+        // console.log("state "+this.state.person.total);
+        // this.total();
 
     }
 
     total =()=>{
     let temp = 0;
-        let tempPerson = [...this.state.person]
-        tempPerson.forEach(element => {
-            temp= temp+element.value;
-        });
-        console.log(temp+" total");
+        // let tempPerson = [...this.state.person]
+        // tempPerson.forEach(element => {
+        //     temp= temp+element.value;
+        // });
+        // console.log(temp+" temp");
+        
+        for(var i=0;i<this.state.person.length;i++){
+            temp=temp+this.state.person[i].value;
+        }
+        console.log(temp+" temp");
         
         this.setState({
             total:temp,
