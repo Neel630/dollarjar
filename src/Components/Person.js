@@ -2,76 +2,82 @@ import React, { Component } from 'react';
 import Addperson from './Addperson'
 
 class Person extends Component {
-
-    state =({
+    constructor(){
+        super();
+        this.state =({
         newperson:"",
         count:0,
-        person:[
-            // {
-            //     username:"Sandeep",
-            //     value:30,
-            //     id:1
-            // },
-            // {
-            //     username:"Meet",
-            //     value:20,
-            //     id:2
-            // }
-        ],
+        person:[],
         penalty:10,
         total:0
       })
 
-      changePenaltyHandler = (event) =>{
+    }
+
+      changePenaltyHandler (event){
         let temp = parseInt(event.target.value)
         this.setState({
             penalty :  temp
         }
         )
-
     }
 
 
-      addpersonHandler = () => {
+      addpersonHandler = (event) => {
+        event.preventDefault();
         console.log(this.state.person);
         // For adding new Person
         let idval = this.state.count;
         let temp = {username: this.state.newperson,value:0, id:idval}
-        idval=idval+1;
-        let arr = this.state.person;
-        arr.push(temp);
+        let stringTrim = this.state.newperson;
+        if(stringTrim.trim()!=""){
+            idval=idval+1;
+            let arr = this.state.person;
+            arr.push(temp);
+            this.setState({
+                person:arr,
+                count:idval
+            })
+        }
+        
+        let tempnewperson = "";
         this.setState({
-            person:arr,
-            count:idval
-        });
+            newperson:tempnewperson
+        })
 
-      }
+        }
+      
 
-      changeHandler = (event) =>{
+      changeHandler(event){
+        event.preventDefault();
             this.setState({
                 newperson :  event.target.value
             }
             )
-
         }
 
 
-    addMoneyHandler = (event, id) =>{
-        var index=0;
-        for(var i=0;i<this.state.person.length;i++){
-            if(this.state.person[i].id ===id){
+    addMoneyHandler (event, id) {
+        let index=0;
+        for(let i=0;i<this.state.person.length;i++){
+            if(this.state.person[i].id ==id){
+                console.log("i "+i);
             index=i;
             break;
             }
         }
+        
+        let temptotal = this.state.total;
+        console.log("index "+index)
         const personTemp = {...this.state.person[index]};
-        personTemp.value = personTemp.value + this.state.penalty;
+        if(!isNaN(this.state.penalty)){
+            temptotal = temptotal + this.state.penalty;
+            personTemp.value = personTemp.value + this.state.penalty;
+        }
         
         const person = [...this.state.person]
         person[index] = personTemp;
         
-        let temptotal = this.state.total;
-        temptotal = temptotal + this.state.penalty;
 
         this.setState({
             person:person,
@@ -79,64 +85,50 @@ class Person extends Component {
         })
     }
 
-    subMoneyHandler = (event, id) =>{
-        var index=0;
-        for(var i=0;i<this.state.person.length;i++){
-            if(this.state.person[i].id ===id){
+    subMoneyHandler(event, id){
+        let index=0;
+        for(let i=0;i<this.state.person.length;i++){
+            if(this.state.person[i].id ==id){
             index=i;
             break;
             }
         }
 
+        let temptotal = this.state.total;
         const personTemp = {...this.state.person[index]};
-        personTemp.value = personTemp.value - this.state.penalty;
+        if(!isNaN(this.state.penalty)){
+            temptotal = temptotal - this.state.penalty;
+            personTemp.value = personTemp.value - this.state.penalty;
+        }
+       
         const person = [...this.state.person]
         person[index] = personTemp;
-
-        let temptotal = this.state.total;
-        temptotal = temptotal - this.state.penalty;
+        
 
         this.setState({
             person:person,
             total:temptotal
         })
-        // console.log("state "+this.state.person.total);
-        // this.total();
+        
 
     }
 
-    // total =()=>{
-    // let temp = 0;
-    //     // let tempPerson = [...this.state.person]
-    //     // tempPerson.forEach(element => {
-    //     //     temp= temp+element.value;
-    //     // });
-    //     // console.log(temp+" temp");
-        
-    //     for(var i=0;i<this.state.person.length;i++){
-    //         temp=temp+this.state.person[i].value;
-    //     }
-    //     console.log(temp+" temp");
-        
-    //     this.setState({
-    //         total:temp,
-    //     })
-
-    //     console.log("total "+this.state.total );
-    // }
 
     render(){
 
 
     return (
-    <div>
-        <input type="text" onChange={event => this.changeHandler(event)}></input>
-        <button onClick={this.addpersonHandler}>Add a Person</button>
+    <div className="container">
+        <form>
+        <input type="text" value={this.state.newperson} onChange={this.changeHandler.bind(this)}></input>
+        <button onClick={(event)=>this.addpersonHandler(event)}>Add a Person</button>
+        </form>
         <p>Total : {this.state.total}</p>
         <p>Penalty : {this.state.penalty}</p>
-        <input type="number" onChange={this.changePenaltyHandler}></input>
+        <input type="number" value={this.state.penalty} onChange={this.changePenaltyHandler.bind(this)}></input>
         {
             this.state.person.map((person) => {
+                console.log("person id "+person.id);
                 return <Addperson 
                     name={person.username}
                     value={person.value}

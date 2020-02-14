@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
+
 class Home extends Component {
     
   state=({
@@ -8,6 +9,7 @@ class Home extends Component {
   })
 
   setUsername=(event)=>{
+    event.preventDefault();
     let temp = event.target.value;
     this.setState({
       username:temp
@@ -18,12 +20,13 @@ class Home extends Component {
   render() {
 
   return (
-      <div>
-          <input onChange={(event)=>this.setUsername(event)}></input>
+      <div className="container">
+      <form>
+          <input onChange={this.setUsername.bind(this)} value={this.state.username} placeholder="Enter Username"></input>
           <Link to={{
             pathname:"/person",
-            username:this.state.username}}><button>Submit</button></Link>
-          
+            username:this.state.username}}><button className="btn btn-primary">Submit</button></Link>
+      </form>
       </div>
 
   );

@@ -8,7 +8,7 @@ class App extends React.Component {
 
     console.log(this.props);
   return (
-    <div>
+    <div className="container">
     <p>Hey {this.props.location.username}</p>
     <Person />
     </div>
